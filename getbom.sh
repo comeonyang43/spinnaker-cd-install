@@ -1,6 +1,6 @@
 #!/bin/bash
 # Wait for the Hal daemon to be ready
-export DAEMON_ENDPOINT=http://127.0.0.1:8064
+export DAEMON_ENDPOINT=http://127.0.0.1:18064
 export HAL_COMMAND="hal --daemon-endpoint $DAEMON_ENDPOINT"
 until $HAL_COMMAND --ready; do sleep 10 ; done
 
