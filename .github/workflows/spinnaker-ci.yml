@@ -35,9 +35,9 @@ jobs:
 #     ## 
     - name: 01-使用Halyard获取bom版本文件
       run: |
-        docker login -u comeonyang -p ${{ secrets.COMEONYANG}} ${NEW_REGISTRY_URL%%/*}
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
         docker pull registry.cn-hangzhou.aliyuncs.com/priv_sync/halyard:1.45.0
-        docker run -itd -p 8084:8084 -p 9000:9000 --name halyard  registry.cn-beijing.aliyuncs.com/spinnaker-cd/halyard:1.32.0
+        docker run -itd -p 8084:8084 -p 9000:9000 --name halyard  registry.cn-beijing.aliyuncs.com/spinnaker-cd/halyard:1.45.0
         sleep 5
         docker ps | grep halyard 
         chmod +x getbom.sh
@@ -57,7 +57,7 @@ jobs:
       
         echo  -e "\033[32m  ---> Tag File ---> \033[0m"
         cat ${TAG_FILE}
-        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWD}} ${NEW_REGISTRY_URL}
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
         for tag in $(cat ${TAG_FILE})
         do 
            echo  -e "\033[32m  ---> pull ---> ${REGISTRY_URL}${tag} \033[0m"
@@ -76,7 +76,7 @@ jobs:
            
     - name: 02-3-同步镜像到阿里云镜像仓库
       run: |
-        docker login -u comeonyang -p ${{ secrets.COMEONYANG}} ${NEW_REGISTRY_URL}
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
         for tag in $(cat ${TAG_FILE})
         do 
            echo  -e "\033[32m  ---> push ---> ${NEW_REGISTRY_URL}${tag} \033[0m"
