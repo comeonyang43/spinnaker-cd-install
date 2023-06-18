@@ -2,12 +2,12 @@
 #VERSION 2
 #renew
 
-name: Spinnaker Pre Install
+name: Spinnaker python
 env:
   SPINNAKER_VERSION: 1.26.7
   #REGISTRY_URL: "gcr.io/spinnaker-marketplace/"
   REGISTRY_URL: "us-docker.pkg.dev/spinnaker-community/docker/"
-  NEW_REGISTRY_URL: "registry.cn-beijing.aliyuncs.com/spinnaker-cd/"
+  NEW_REGISTRY_URL: "registry.cn-hangzhou.aliyuncs.com/priv_sync/"
   NEW_REGISTRY_URL2: "docker.io/spinnakercd/"
   TAG_FILE: "tagfile.txt"
   BOM_DIR: ".boms"
@@ -65,19 +65,10 @@ jobs:
            docker pull ${REGISTRY_URL}${tag}
         done
     
-    - name: 02-2-同步镜像到dockerHUB
-      run: |
-        docker login -u ${{ secrets.HUBDOCKER_USER}} -p ${{ secrets.HUBDOCKER_PASSWD}} docker.io
-        for tag in $(cat ${TAG_FILE})
-        do 
-           echo  -e "\033[32m  ---> push ---> ${NEW_REGISTRY_URL2}${tag} \033[0m"
-           docker tag ${REGISTRY_URL}${tag} ${NEW_REGISTRY_URL2}${tag}
-           docker push ${NEW_REGISTRY_URL2}${tag}
-        done
            
 #     - name: 02-3-同步镜像到阿里云镜像仓库
 #       run: |
-#         docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWD}} ${NEW_REGISTRY_URL}
+#         docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
 #         for tag in $(cat ${TAG_FILE})
 #         do 
 #            echo  -e "\033[32m  ---> push ---> ${NEW_REGISTRY_URL}${tag} \033[0m"
