@@ -36,7 +36,7 @@ jobs:
 #     ## 
     - name: 01-使用Halyard获取bom版本文件
       run: |
-        docker pull registry.cn-beijing.aliyuncs.com/spinnaker-cd/halyard:1.32.0
+        docker pull registry.cn-hangzhou.aliyuncs.com/priv_sync/halyard:1.45.0
         docker run -itd -p 8064:8064  --name halyard  registry.cn-hangzhou.aliyuncs.com/priv_sync/halyard:1.45.0
         sleep 5
         docker ps | grep halyard 
