@@ -9,7 +9,7 @@ env:
   #REGISTRY_URL: "gcr.io/spinnaker-marketplace/"
   REGISTRY_URL: "us-docker.pkg.dev/spinnaker-community/docker/"
   NEW_REGISTRY_URL: "registry.cn-hangzhou.aliyuncs.com/priv_sync/"
-  TAG_FILE: "tagfile.txt"
+  TAG_FILE_NAME: "tagfile.txt"
   BOM_DIR: ".boms"
   
 
@@ -48,7 +48,7 @@ jobs:
     - name: 02-1-获取gcr.io镜像
       run: |
         export VER_NAME=${SPINNAKER_VERSION}.yml
-        export TAG_FILE=${TAG_FILE}
+        export TAG_FILE=${TAG_FILE_NAME}
         chmod +x tools/verlist
         mv tools/verlist ./ && ./verlist   
         echo  -e "\033[32m  ---> Tag File ---> \033[0m"
