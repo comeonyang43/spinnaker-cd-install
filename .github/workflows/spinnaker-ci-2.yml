@@ -36,6 +36,7 @@ jobs:
 #     ## 
     - name: 01-使用Halyard获取bom版本文件
       run: |
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
         docker pull registry.cn-hangzhou.aliyuncs.com/priv_sync/halyard:1.45.0
         docker run -itd -p 8064:8064  --name halyard  registry.cn-hangzhou.aliyuncs.com/priv_sync/halyard:1.45.0
         sleep 5
