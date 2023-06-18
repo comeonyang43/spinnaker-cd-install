@@ -58,6 +58,7 @@ jobs:
         do 
            echo  -e "\033[32m  ---> pull ---> ${REGISTRY_URL}${tag} \033[0m"
            docker pull ${REGISTRY_URL}${tag}
+           [ $? -ne 0 ] || true
         done
     
            
