@@ -46,9 +46,10 @@ jobs:
     ## docker https://github.com/Azure/docker-login
     - name: 02-1-获取gcr.io镜像
       run: |
-        python3 tools/fileprocess.py ${SPINNAKER_VERSION}.yml  ${TAG_FILE} ${BOM_DIR} 
-        ls ${BOM_DIR}
-      
+        export VER_NAME=${SPINNAKER_VERSION}.yml
+        export TAG_FILE=${TAG_FILE}
+        chmod +x tools/verlist
+        tools/verlist   
         echo  -e "\033[32m  ---> Tag File ---> \033[0m"
         cat ${TAG_FILE}
         docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
