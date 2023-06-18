@@ -38,9 +38,8 @@ jobs:
         docker exec -u root halyard sh /opt/getbom.sh ${SPINNAKER_VERSION}
         echo "start copy ${SPINNAKER_VERSION}.yml"
         docker cp halyard:/opt/${SPINNAKER_VERSION}.yml ./${SPINNAKER_VERSION}-1.yml
-        cat ./${SPINNAKER_VERSION}-1.yml | egrep -v "Get|Success"> ./${SPINNAKER_VERSION}.yml
-        sed -i -E 's/[[:space:]]+$//g' ${SPINNAKER_VERSION}.yml
-        sed -i 's/\t/    /'g ${SPINNAKER_VERSION}.yml
+        cat ./${SPINNAKER_VERSION}-1.yml | egrep -v "Get|Success" | tr -cd "[:print:]\n" > ./${SPINNAKER_VERSION}.yml
+    
         mkdir -p .boms
         
     ## 解析版本文件生成镜像标签
