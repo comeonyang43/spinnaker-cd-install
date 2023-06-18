@@ -57,8 +57,11 @@ jobs:
         for tag in $(cat ${TAG_FILE})
         do 
            echo  -e "\033[32m  ---> pull ---> ${REGISTRY_URL}${tag} \033[0m"
-           docker pull ${REGISTRY_URL}${tag}
-           [ $? -ne 0 ] || true
+           if docker pull ${REGISTRY_URL}${tag} ;then
+               echo "pulling success "
+           else 
+               continue
+           fi
         done
     
            
