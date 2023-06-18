@@ -37,7 +37,8 @@ jobs:
         docker exec -u root halyard chmod +x /opt/getbom.sh
         docker exec -u root halyard sh /opt/getbom.sh ${SPINNAKER_VERSION}
         echo "start copy ${SPINNAKER_VERSION}.yml"
-        docker cp halyard:/opt/${SPINNAKER_VERSION}.yml ./${SPINNAKER_VERSION}.yml
+        docker cp halyard:/opt/${SPINNAKER_VERSION}.yml ./${SPINNAKER_VERSION}-1.yml
+        cat ./${SPINNAKER_VERSION}-1.yml > ./${SPINNAKER_VERSION}.yml
         mkdir -p .boms
         
     ## 解析版本文件生成镜像标签
