@@ -9,7 +9,7 @@ class SpinnakerToDo(object):
         self.filePath = sys.argv[1]
         self.tagFile = sys.argv[2]
         self.bomDir = sys.argv[3]
-        self.gitRepo = "https://raw.githubusercontent.com/spinnaker"
+        self.gitRepo = "https://github.com/spinnaker"
         #self.exceptServices = ["defaultArtifact","monitoring-third-party","monitoring-daemon"]
         self.exceptServices = ["defaultArtifact","monitoring-third-party"]
 
@@ -48,7 +48,7 @@ class SpinnakerToDo(object):
         for s in serviceData.keys():
             if  s not in  self.exceptServices :
                 serviceVersion = serviceData[s]['version']
-                tag = "version-" + serviceVersion.split("-")[0]
+                tag = "v" + serviceVersion.split("-")[0]
                 print(s  + ">>>>===GitHub Tag Version===>>>>" + tag)
                 ## 创建一个服务目录
                 createDirCmd = "mkdir -p %s/%s/%s" %(self.bomDir, s, serviceVersion )
@@ -64,13 +64,15 @@ class SpinnakerToDo(object):
                     serviceFile = 'spinnaker-monitoring.yml'
                     ## 下载服务配置文件，放到服务目录下
                     ## https://raw.githubusercontent.com/spinnaker/spinnaker-monitoring/version-0.18.1/spinnaker-monitoring-daemon/halconfig/spinnaker-monitoring.yml
-                    cmd1 = "curl %s/%s/%s/spinnaker-monitoring-daemon/halconfig/%s -o %s/%s/%s" %(self.gitRepo, 'spinnaker-monitoring', tag, serviceFile, self.bomDir, s, serviceFile )
+                   # cmd1 = "curl %s/%s/%s/spinnaker-monitoring-daemon/halconfig/%s -o %s/%s/%s" %(self.gitRepo, 'spinnaker-monitoring', tag, serviceFile, self.bomDir, s, serviceFile )
+                    cmd1 = "curl %s/%s/tree/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
                     os.system(cmd1)
                     cmd2 = "cp %s/%s/%s %s/%s/%s/%s" %(self.bomDir, s, serviceFile, self.bomDir,  s, serviceVersion, serviceFile )
                     os.system(cmd2)
                 else :
                     ## 下载服务配置文件，放到服务目录下
-                    cmd1 = "curl %s/%s/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
+                    #https://github.com/spinnaker/deck/tree/v3.9.4/halconfig/settings.js
+                    cmd1 = "curl %s/%s/tree/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
                     os.system(cmd1)
                     ## 复制服务配置文件，放到服务版本目录下
                     cmd2 = "cp %s/%s/%s %s/%s/%s/%s" %(self.bomDir, s, serviceFile, self.bomDir,  s, serviceVersion, serviceFile )
