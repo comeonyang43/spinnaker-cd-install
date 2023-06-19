@@ -47,7 +47,7 @@ class SpinnakerToDo(object):
         serviceData = self.GetYamlData()
         for s in serviceData.keys():
             if  s not in  self.exceptServices :
-                serviceVersion = serviceData[s]['version']
+                serviceVersion = serviceData[s]['commit']
                 #tag = "v" + serviceVersion.split("-")[0]
                 tag = serviceVersion
                 print(s  + ">>>>===GitHub Tag Version===>>>>" + tag)
