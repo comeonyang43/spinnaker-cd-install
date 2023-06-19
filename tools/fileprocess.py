@@ -48,7 +48,8 @@ class SpinnakerToDo(object):
         for s in serviceData.keys():
             if  s not in  self.exceptServices :
                 serviceVersion = serviceData[s]['version']
-                tag = "v" + serviceVersion.split("-")[0]
+                #tag = "v" + serviceVersion.split("-")[0]
+                tag = serviceVersion
                 print(s  + ">>>>===GitHub Tag Version===>>>>" + tag)
                 ## 创建一个服务目录
                 createDirCmd = "mkdir -p %s/%s/%s" %(self.bomDir, s, serviceVersion )
@@ -71,8 +72,8 @@ class SpinnakerToDo(object):
                     os.system(cmd2)
                 else :
                     ## 下载服务配置文件，放到服务目录下
-                    #https://github.com/spinnaker/deck/tree/v3.9.4/halconfig/settings.js
-                    cmd1 = "curl %s/%s/tree/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
+                    #https://github.com/spinnaker/deck/blob/44b80f3870f15f00ae62489ba5c5f7da6b993063/halconfig/settings.js
+                    cmd1 = "curl %s/%s/blob/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
                     os.system(cmd1)
                     ## 复制服务配置文件，放到服务版本目录下
                     cmd2 = "cp %s/%s/%s %s/%s/%s/%s" %(self.bomDir, s, serviceFile, self.bomDir,  s, serviceVersion, serviceFile )
