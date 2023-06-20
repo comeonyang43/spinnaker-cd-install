@@ -48,8 +48,7 @@ class SpinnakerToDo(object):
         for s in serviceData.keys():
             if  s not in  self.exceptServices :
                 serviceVersion = serviceData[s]['version']
-                #tag = "v" + serviceVersion.split("-")[0]
-                tag = serviceVersion
+                tag = "v" + serviceVersion.split("-")[0]
                 print(s  + ">>>>===GitHub Tag Version===>>>>" + tag)
                 ## 创建一个服务目录
                 createDirCmd = "mkdir -p %s/%s/%s" %(self.bomDir, s, serviceVersion )
