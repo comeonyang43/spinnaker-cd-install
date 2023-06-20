@@ -64,7 +64,8 @@ class SpinnakerToDo(object):
                     serviceFile = 'spinnaker-monitoring.yml'
                     ## 下载服务配置文件，放到服务目录下
                     ## https://raw.githubusercontent.com/spinnaker/spinnaker-monitoring/v0.4.0/spinnaker-monitoring-daemon/spinnaker-monitoring.yml
-                   # cmd1 = "curl %s/%s/%s/spinnaker-monitoring-daemon/%s -o %s/%s/%s" %(self.gitRepo, 'spinnaker-monitoring', tag, serviceFile, self.bomDir, s, serviceFile )
+                    ## https://raw.githubusercontent.com/spinnaker/spinnaker-monitoring/v1.4.0/spinnaker-monitoring-daemon/halconfig/spinnaker-monitoring.yml
+                   # cmd1 = "curl %s/%s/%s/spinnaker-monitoring-daemon/halconfig/%s -o %s/%s/%s" %(self.gitRepo, 'spinnaker-monitoring', tag, serviceFile, self.bomDir, s, serviceFile )
                     cmd1 = "curl %s/%s/tree/%s/halconfig/%s -o %s/%s/%s" %(self.gitRepo, s, tag, serviceFile, self.bomDir, s, serviceFile )
                     os.system(cmd1)
                     cmd2 = "cp %s/%s/%s %s/%s/%s/%s" %(self.bomDir, s, serviceFile, self.bomDir,  s, serviceVersion, serviceFile )
