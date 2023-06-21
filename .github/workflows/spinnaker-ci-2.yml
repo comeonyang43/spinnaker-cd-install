@@ -57,33 +57,33 @@ jobs:
         python3 tools/fileprocess.py ${SPINNAKER_VERSION}.yml  ${TAG_FILE} ${BOM_DIR} 
         ls ${BOM_DIR}
       
-#         echo  -e "\033[32m  ---> Tag File ---> \033[0m"
-#         cat ${TAG_FILE}
-#         docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
-#         for tag in $(cat ${TAG_FILE})
-#         do 
-#            echo  -e "\033[32m  ---> pull ---> ${REGISTRY_URL}${tag} \033[0m"
-#            if docker pull ${REGISTRY_URL}${tag};then 
-#              echo "img pull success ..."
-#            else 
-#              continue
-#            fi
-#         done
+        echo  -e "\033[32m  ---> Tag File ---> \033[0m"
+        cat ${TAG_FILE}
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
+        for tag in $(cat ${TAG_FILE})
+        do 
+           echo  -e "\033[32m  ---> pull ---> ${REGISTRY_URL}${tag} \033[0m"
+           if docker pull ${REGISTRY_URL}${tag};then 
+             echo "img pull success ..."
+           else 
+             continue
+           fi
+        done
     
            
-#     - name: 02-3-同步镜像到阿里云镜像仓库
-#       run: |
-#         docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
-#         for tag in $(cat ${TAG_FILE})
-#         do 
-#            echo  -e "\033[32m  ---> push ---> ${NEW_REGISTRY_URL}${tag} \033[0m"
-#            if docker tag ${REGISTRY_URL}${tag} ${NEW_REGISTRY_URL}${tag};then 
-#              echo "$tag  retag success ..."
-#              docker push ${NEW_REGISTRY_URL}${tag}
-#            else 
-#              continue
-#            fi
-#         done
+    - name: 02-3-同步镜像到阿里云镜像仓库
+      run: |
+        docker login -u ${{ secrets.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD}} ${NEW_REGISTRY_URL%%/*}
+        for tag in $(cat ${TAG_FILE})
+        do 
+           echo  -e "\033[32m  ---> push ---> ${NEW_REGISTRY_URL}${tag} \033[0m"
+           if docker tag ${REGISTRY_URL}${tag} ${NEW_REGISTRY_URL}${tag};then 
+             echo "$tag  retag success ..."
+             docker push ${NEW_REGISTRY_URL}${tag}
+           else 
+             continue
+           fi
+        done
            
     ## 收集镜像tag文件和下载镜像的脚本
     - name: 03- 收集镜像tag文件和下载镜像的脚本
