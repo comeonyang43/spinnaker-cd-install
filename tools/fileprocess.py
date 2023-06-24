@@ -81,9 +81,10 @@ class SpinnakerToDo(object):
                     ## rosco服务需要额外下载几个目录(images.yml packer)
                     if s == "rosco":
                         os.system("git clone --branch %s https://github.com/spinnaker/rosco.git " %(tag))
+                        os.system("tar  -zcf rosco/halconfig/packer.tar.gz  rosco/halconfig/packer")
                         os.system("cp -r rosco/halconfig/* %s/%s/" %(self.bomDir, s))
                         os.system("cp -r rosco/halconfig/* %s/%s/%s/" %(self.bomDir, s, serviceVersion))
-                        os.system("tar  -zcf packer.tar.gz  %s/%s/" %(self.bomDir, s))
+            
 
                     ## 检查文件
                     os.system("ls %s/%s" %(self.bomDir, s ))
