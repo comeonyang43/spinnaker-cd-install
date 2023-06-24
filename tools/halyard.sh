@@ -1,38 +1,46 @@
 #!/bin/bash
 
-VERSION="SPIN_VERSION"
-DECK_HOST="http://spinnaker.idevops.site"
-GATE_HOST="http://spin-gate.idevops.site"
+VERSION="1.28.7"
+DECK_HOST="http://192.168.146.133"
+GATE_HOST="http://192.168.146.133"
+MINIO_EP="http://minio.default.svc.cluster.local.:9000"
+MINIO_ID="AnWFkXScTzQy3vwd"
+MINIO_KEY="fsob5BYU9NGSkvJnDZXn5XeBR09I7sKa"
+IMG_REGISTRY="registry.cn-hangzhou.aliyuncs.com"
+IMG_REGISTRY_USER=""
+IMG_REGISTRY_PASS=""
 until hal --ready; do sleep 10 ; done
 
-# 设置Spinnaker版本，--version 指定版本
+## 设置Spinnaker版本，--version 指定版本
 hal config version edit --version local:${VERSION} --no-validate
-
+#
 ## 设置时区
-hal config edit --timezone Asia/Shanghai
+hal config edit --timezone Asia/Shanghai --no-validate
 
-## Storage 配置基于minio搭建的S3存储
+### Storage 配置基于minio搭建的S3存储
 hal config storage s3 edit \
-        --endpoint http://minio.idevops.site \
-        --access-key-id AKIAIOSFODNN7EXAMPLE \
-        --secret-access-key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \
+        --endpoint ${MINIO_EP} \
+        --access-key-id ${MINIO_ID} \
+        --secret-access-key ${MINIO_KEY} \
         --bucket spinnaker \
-        --path-style-access true --no-validate
+        --path-style-access true \
+        --no-validate
 hal config storage edit --type s3 --no-validate
 
 # Docker Registry  Docker镜像仓库
 # Set the dockerRegistry provider as enabled
 hal config provider docker-registry enable --no-validate
-hal config provider docker-registry account add dockerhub \
-    --address index.docker.io \
-    --repositories library/alpine,library/ubuntu,library/centos,library/nginx \
+hal config provider docker-registry account add priv-registry \
+    --address ${IMG_REGISTRY} \
+    --username ${IMG_REGISTRY_USER} \
+    --password ${IMG_REGISTRY_PASS} \
     --no-validate
 
 
 # 添加account to the kubernetes provider.
 hal config provider kubernetes enable --no-validate
 hal config provider kubernetes account add default \
-    --docker-registries dockerhub \
+    --docker-registries priv-registry \
     --context $(kubectl config current-context) \
     --service-account true \
     --omit-namespaces=kube-system,kube-public \
