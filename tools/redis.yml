@@ -1,0 +1,4 @@
+artifactId: registry.cn-hangzhou.aliyuncs.com/priv_sync/redis-cluster:v2
+kubernetes:
+  imagePullSecrets:
+  - mysecret
