@@ -83,6 +83,7 @@ class SpinnakerToDo(object):
                         os.system("git clone --branch %s https://github.com/spinnaker/rosco.git " %(tag))
                         os.system("cp -r rosco/halconfig/* %s/%s/" %(self.bomDir, s))
                         os.system("cp -r rosco/halconfig/* %s/%s/%s/" %(self.bomDir, s, serviceVersion))
+                        os.system("tar  -zcf packer.tar.gz  %s/%s/" %(self.bomDir, s))
 
                     ## 检查文件
                     os.system("ls %s/%s" %(self.bomDir, s ))
