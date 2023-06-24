@@ -1,14 +1,27 @@
 #!/bin/bash
 
-VERSION="1.28.7"
-DECK_HOST="http://192.168.146.133"
-GATE_HOST="http://192.168.146.133"
-MINIO_EP="http://minio.default.svc.cluster.local.:9000"
-MINIO_ID="AnWFkXScTzQy3vwd"
-MINIO_KEY="fsob5BYU9NGSkvJnDZXn5XeBR09I7sKa"
-IMG_REGISTRY="registry.cn-hangzhou.aliyuncs.com"
-IMG_REGISTRY_USER=""
-IMG_REGISTRY_PASS=""
+. /home/spinnaker/env.sh
+
+until hal --ready; do sleep 10 ; done
+
+## 设置Spinnaker版本，--version 指定版本
+hal config version edit --version local:${VERSION} --no-validate
+#
+## 设置时区
+hal config edit --timezone Asia/Shanghai --no-validate
+
+### Storage 配置基于minio搭建的S3存储
+hal config storage s3 edit \
+        --endpoint ${MINIO_EP} \
+        --access-key-id ${MINIO_ID} \
+        --secret-access-key ${MINIO_KEY} \
+        --bucket spinnaker \
+        --path-style-access true \
+[root@middle2 1.28.7]# cat halyard.sh 
+#!/bin/bash
+
+. /home/spinnaker/env.sh
+
 until hal --ready; do sleep 10 ; done
 
 ## 设置Spinnaker版本，--version 指定版本
