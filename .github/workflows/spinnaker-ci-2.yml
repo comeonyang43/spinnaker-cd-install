@@ -89,6 +89,8 @@ jobs:
         mv tools/halyard.yaml artifacts/${SPINNAKER_VERSION}/
         mv tools/install.sh artifacts/${SPINNAKER_VERSION}/
         mv tools/ingress.yaml artifacts/${SPINNAKER_VERSION}/
+        mv tools/env.sh artifacts/${SPINNAKER_VERSION}/
+        mv tools/redis.yml artifacts/${SPINNAKER_VERSION}/
         ##
         mv ${BOM_DIR} artifacts/${SPINNAKER_VERSION}/
         mkdir -p artifacts/${SPINNAKER_VERSION}/${BOM_DIR}/bom
