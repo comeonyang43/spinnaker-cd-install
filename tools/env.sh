@@ -1,7 +1,9 @@
 #!/bin/bash
 
 VERSION="1.28.7"
+#非80|443要加上端口，否则跨域
 DECK_HOST="http://192.168.146.133"
+#非80|443要加上端口，否则跨域
 GATE_HOST="http://192.168.146.133"
 MINIO_EP="http://minio.default.svc.cluster.local.:9000"
 MINIO_ID="AnWFkXScTzQy3vwd"
