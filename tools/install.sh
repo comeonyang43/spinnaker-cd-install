@@ -14,7 +14,7 @@ function Install(){
     [ -d ${BOMS_DIR} ] || mkdir ${BOMS_DIR}
     mv ${BOMS_FILR} ${BOMS_DIR}
     mkdir ${BOMS_DIR}/default/service-settings -p 
-    cp redis.yml > ${BOMS_DIR}/default/service-settings/ 
+    cp redis.yml  ${BOMS_DIR}/default/service-settings/ 
     ls -a ${BOMS_DIR}
     chmod 777 -R ${BOMS_DIR}
     chmod 777 -R ${KUBE_DIR}
